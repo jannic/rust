@@ -213,7 +213,9 @@ impl<'a, 'gcx, 'tcx> FnCtxt<'a, 'gcx, 'tcx> {
                             lhs_ty);
 
                         if let TypeVariants::TyRef(_, ref ty_mut) = lhs_ty.sty {
-                            if !self.infcx.type_moves_by_default(ty_mut.ty, lhs_expr.span) &&
+                            if !self.infcx.type_moves_by_default(self.param_env,
+                                                                 ty_mut.ty,
+                                                                 lhs_expr.span) &&
                                 self.lookup_op_method(expr, ty_mut.ty, vec![rhs_ty],
                                     Symbol::intern(name), trait_def_id,
                                     lhs_expr).is_ok() {
